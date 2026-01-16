@@ -22,8 +22,11 @@ const CONFIG = {
 // Load config from backend on page load
 async function loadConfig() {
     try {
+        console.log('Fetching config from:', `${CONFIG.BACKEND_URL}/api/config`);
         const response = await fetch(`${CONFIG.BACKEND_URL}/api/config`);
         const backendConfig = await response.json();
+
+        console.log('Config loaded from backend:', backendConfig);
 
         // Update prices and trial period from backend
         CONFIG.PRICE_INR = backendConfig.PRICE_INR;
@@ -32,26 +35,37 @@ async function loadConfig() {
 
         // Update UI elements that show trial period
         const trialElements = document.querySelectorAll('.trial-days');
+        console.log('Found trial elements:', trialElements.length);
         trialElements.forEach(el => {
+            console.log('Updating trial element from', el.textContent, 'to', `${CONFIG.TRIAL_DAYS} Days`);
             el.textContent = `${CONFIG.TRIAL_DAYS} Days`;
         });
 
         // Update UI elements that show price
         const priceElements = document.querySelectorAll('.price-inr');
+        console.log('Found price elements:', priceElements.length);
         priceElements.forEach(el => {
+            console.log('Updating price element from', el.textContent, 'to', CONFIG.PRICE_INR);
             el.textContent = CONFIG.PRICE_INR;
         });
 
-        console.log('Config loaded from backend:', backendConfig);
     } catch (error) {
-        console.warn('Failed to load config from backend, using defaults:', error);
+        console.error('Failed to load config from backend:', error);
     }
 }
 
 // Load config when page loads
+window.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded, loading config...');
+    loadConfig();
+});
+
+// Also try loading immediately in case DOMContentLoaded already fired
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadConfig);
+    // Still loading, wait for DOMContentLoaded
 } else {
+    // Already loaded
+    console.log('DOM already loaded, loading config immediately...');
     loadConfig();
 }
 
