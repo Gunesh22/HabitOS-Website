@@ -9,9 +9,9 @@ const CONFIG = {
     GUMROAD_URL: 'https://guneshg.gumroad.com/l/madcgz',
     BACKEND_URL: 'https://habitos-final.onrender.com',
     DOWNLOAD_URLS: {
-        windows: 'HabitOS-Setup.exe',
-        mac: 'https://github.com/Gunesh22/HabitOS/releases/download/v0.1.0/HabitOS.dmg',
-        linux: 'https://github.com/Gunesh22/HabitOS/releases/download/v0.1.0/HabitOS.AppImage'
+        windows: 'https://github.com/Gunesh22/HabitOS-Final/releases/latest/download/HabitOS-Setup.exe',
+        mac: 'https://github.com/Gunesh22/HabitOS-Final/releases/latest/download/HabitOS.dmg',
+        linux: 'https://github.com/Gunesh22/HabitOS-Final/releases/latest/download/HabitOS.AppImage'
     },
     // These will be loaded from backend
     PRICE_INR: 850,
