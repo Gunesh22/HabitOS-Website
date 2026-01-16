@@ -45,8 +45,8 @@ async function loadConfig() {
         const priceElements = document.querySelectorAll('.price-inr');
         console.log('Found price elements:', priceElements.length);
         priceElements.forEach(el => {
-            console.log('Updating price element from', el.textContent, 'to', CONFIG.PRICE_INR);
-            el.textContent = CONFIG.PRICE_INR;
+            console.log('Updating price element from', el.textContent, 'to', `₹${CONFIG.PRICE_INR}`);
+            el.textContent = `₹${CONFIG.PRICE_INR}`;
         });
 
     } catch (error) {
