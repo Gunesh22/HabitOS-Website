@@ -5,7 +5,7 @@
 // This will be fetched from the backend API on page load
 
 const CONFIG = {
-    RAZORPAY_KEY: 'rzp_test_S4EmNyR8vEm4Hp',
+    RAZORPAY_KEY: 'rzp_live_S4eel0vxm9fxDk',
     GUMROAD_URL: 'https://guneshg.gumroad.com/l/madcgz',
     BACKEND_URL: 'https://habitos-final.onrender.com',
     DOWNLOAD_URLS: {
