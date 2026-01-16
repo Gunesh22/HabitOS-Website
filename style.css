@@ -502,6 +502,12 @@ p {
     font-weight: 400;
 }
 
+.price .price-inr {
+    font-size: 3rem;
+    color: #FFFFFF;
+    font-weight: 700;
+}
+
 .pricing-features {
     margin: 2rem 0;
     text-align: left;
