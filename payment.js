@@ -13,10 +13,10 @@ const CONFIG = {
         mac: 'https://github.com/Gunesh22/HabitOS-Final/releases/latest/download/HabitOS.dmg',
         linux: 'https://github.com/Gunesh22/HabitOS-Final/releases/latest/download/HabitOS.AppImage'
     },
-    // These will be loaded from backend
-    PRICE_INR: 850,
-    PRICE_USD: 10,
-    TRIAL_DAYS: 10
+    // These MUST be loaded from backend - no defaults!
+    PRICE_INR: null,
+    PRICE_USD: null,
+    TRIAL_DAYS: null
 };
 
 // Load config from backend on page load
