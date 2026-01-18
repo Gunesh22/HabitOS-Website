@@ -6,6 +6,6 @@ node_modules/
 .env.local
 
 # Large installer (now hosted on website)
-# HabitOS-Setup.exe
+HabitOS-Setup.exe
 
 *.zip

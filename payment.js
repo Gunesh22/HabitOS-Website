@@ -9,7 +9,7 @@ const CONFIG = {
 
     BACKEND_URL: 'https://habitos-final.onrender.com',
     DOWNLOAD_URLS: {
-        windows: 'https://github.com/Gunesh22/HabitOS-Final/releases/latest/download/HabitOS-Setup.zip',
+        windows: 'https://github.com/Gunesh22/HabitOS-Final/releases/latest/download/HabitOS-Setup.exe',
         mac: 'https://github.com/Gunesh22/HabitOS-Final/releases/latest/download/HabitOS.dmg',
         linux: 'https://github.com/Gunesh22/HabitOS-Final/releases/latest/download/HabitOS.AppImage'
     },
@@ -163,7 +163,7 @@ function downloadApp(platform) {
     // Create a temporary anchor element to trigger download
     const link = document.createElement('a');
     link.href = url;
-    link.download = platform === 'windows' ? 'HabitOS-Setup.zip' :
+    link.download = platform === 'windows' ? 'HabitOS-Setup.exe' :
         platform === 'mac' ? 'HabitOS.dmg' : 'HabitOS.AppImage';
     document.body.appendChild(link);
     link.click();
