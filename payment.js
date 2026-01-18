@@ -47,10 +47,17 @@ async function loadConfig() {
         priceElements.forEach(el => {
             console.log('Updating price element from', el.textContent, 'to', `₹${CONFIG.PRICE_INR}`);
             el.textContent = `₹${CONFIG.PRICE_INR}`;
+            el.style.visibility = 'visible'; // Show price after loading
         });
 
     } catch (error) {
         console.error('Failed to load config from backend:', error);
+        // Show error state
+        const priceElements = document.querySelectorAll('.price-inr');
+        priceElements.forEach(el => {
+            el.textContent = 'Error';
+            el.style.visibility = 'visible';
+        });
     }
 }
 
