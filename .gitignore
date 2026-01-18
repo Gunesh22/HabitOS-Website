@@ -5,6 +5,7 @@ node_modules/
 .env
 .env.local
 
-# Ignore large installer (host on GitHub Releases instead)
-HabitOS-Setup.exe
-*.exe
+# Large installer (now hosted on website)
+# HabitOS-Setup.exe
+
+*.zip

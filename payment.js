@@ -6,10 +6,10 @@
 
 const CONFIG = {
     RAZORPAY_KEY: 'rzp_live_S4eel0vxm9fxDk',
-    GUMROAD_URL: 'https://guneshg.gumroad.com/l/madcgz',
+
     BACKEND_URL: 'https://habitos-final.onrender.com',
     DOWNLOAD_URLS: {
-        windows: 'https://github.com/Gunesh22/HabitOS-Final/releases/latest/download/HabitOS-Setup.exe',
+        windows: 'https://github.com/Gunesh22/HabitOS-Final/releases/latest/download/HabitOS-Setup.zip',
         mac: 'https://github.com/Gunesh22/HabitOS-Final/releases/latest/download/HabitOS.dmg',
         linux: 'https://github.com/Gunesh22/HabitOS-Final/releases/latest/download/HabitOS.AppImage'
     },
@@ -22,11 +22,11 @@ const CONFIG = {
 // Load config from backend on page load
 async function loadConfig() {
     try {
-        console.log('Fetching config from:', `${CONFIG.BACKEND_URL}/api/config`);
+
         const response = await fetch(`${CONFIG.BACKEND_URL}/api/config`);
         const backendConfig = await response.json();
 
-        console.log('Config loaded from backend:', backendConfig);
+
 
         // Update prices and trial period from backend
         CONFIG.PRICE_INR = backendConfig.PRICE_INR;
@@ -35,23 +35,24 @@ async function loadConfig() {
 
         // Update UI elements that show trial period
         const trialElements = document.querySelectorAll('.trial-days');
-        console.log('Found trial elements:', trialElements.length);
+
         trialElements.forEach(el => {
-            console.log('Updating trial element from', el.textContent, 'to', `${CONFIG.TRIAL_DAYS} Days`);
+
             el.textContent = `${CONFIG.TRIAL_DAYS} Days`;
         });
 
         // Update UI elements that show price
         const priceElements = document.querySelectorAll('.price-inr');
-        console.log('Found price elements:', priceElements.length);
+
         priceElements.forEach(el => {
-            console.log('Updating price element from', el.textContent, 'to', `₹${CONFIG.PRICE_INR}`);
+
             el.textContent = `₹${CONFIG.PRICE_INR}`;
             el.style.visibility = 'visible'; // Show price after loading
         });
 
     } catch (error) {
-        console.error('Failed to load config from backend:', error);
+        // Fail silently or show error UI
+
         // Show error state
         const priceElements = document.querySelectorAll('.price-inr');
         priceElements.forEach(el => {
@@ -63,7 +64,7 @@ async function loadConfig() {
 
 // Load config when page loads
 window.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM loaded, loading config...');
+
     loadConfig();
 });
 
@@ -72,7 +73,7 @@ if (document.readyState === 'loading') {
     // Still loading, wait for DOMContentLoaded
 } else {
     // Already loaded
-    console.log('DOM already loaded, loading config immediately...');
+
     loadConfig();
 }
 
@@ -87,7 +88,7 @@ function payWithRazorpay() {
         image: 'assets/logo.png',
         handler: function (response) {
             // Payment successful
-            console.log('Payment successful:', response);
+
 
             // Show success message
             showNotification('Payment successful! Generating your license key...', 'success');
@@ -108,7 +109,7 @@ function payWithRazorpay() {
         },
         modal: {
             ondismiss: function () {
-                console.log('Payment cancelled');
+
             }
         }
     };
@@ -117,11 +118,7 @@ function payWithRazorpay() {
     razorpay.open();
 }
 
-// Gumroad Payment Integration
-function payWithGumroad() {
-    window.open(CONFIG.GUMROAD_URL, '_blank');
-    showNotification('Opening Gumroad payment page...', 'info');
-}
+
 
 // Generate License Key
 async function generateLicense(paymentId, provider) {
@@ -150,7 +147,8 @@ async function generateLicense(paymentId, provider) {
             showNotification('Error generating license. Please contact support.', 'error');
         }
     } catch (error) {
-        console.error('Error:', error);
+        // Error handling
+
         showNotification('Error connecting to server. Please contact support.', 'error');
     }
 }
@@ -162,8 +160,14 @@ function downloadApp(platform) {
     // Show notification
     showNotification(`Preparing download for ${platform.charAt(0).toUpperCase() + platform.slice(1)}...`, 'info');
 
-    // Production - actual download
-    window.location.href = url;
+    // Create a temporary anchor element to trigger download
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = platform === 'windows' ? 'HabitOS-Setup.zip' :
+        platform === 'mac' ? 'HabitOS.dmg' : 'HabitOS.AppImage';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 
     // Show trial info after download starts
     setTimeout(() => {
@@ -242,19 +246,7 @@ function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
     notification.textContent = message;
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 15px 25px;
-        background: ${type === 'success' ? '#00ffcc' : type === 'error' ? '#ff4444' : '#4444ff'};
-        color: ${type === 'success' ? '#000' : '#fff'};
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        z-index: 10000;
-        font-weight: 600;
-        animation: slideIn 0.3s ease;
-    `;
+
 
     document.body.appendChild(notification);
 
@@ -265,86 +257,6 @@ function showNotification(message, type = 'info') {
 }
 
 // Add CSS for modals and animations
-const style = document.createElement('style');
-style.textContent = `
-    .license-modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 9999;
-        animation: fadeIn 0.3s ease;
-    }
-    
-    .license-modal-content {
-        background: #1a1a2e;
-        padding: 40px;
-        border-radius: 20px;
-        max-width: 600px;
-        text-align: center;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-        border: 1px solid rgba(0, 255, 204, 0.2);
-    }
-    
-    .license-modal-content h2 {
-        color: #00ffcc;
-        margin-bottom: 20px;
-    }
-    
-    .license-key-box {
-        background: rgba(0, 0, 0, 0.3);
-        padding: 20px;
-        border-radius: 10px;
-        margin: 20px 0;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 15px;
-    }
-    
-    .license-key-box code {
-        font-size: 1.2rem;
-        color: #00ffcc;
-        font-family: 'Courier New', monospace;
-        flex: 1;
-    }
-    
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-    
-    @keyframes slideIn {
-        from { transform: translateX(400px); opacity: 0; }
-        to { transform: translateX(0); opacity: 1; }
-    }
-    
-    @keyframes slideOut {
-        from { transform: translateX(0); opacity: 1; }
-        to { transform: translateX(400px); opacity: 0; }
-    }
-`;
-document.head.appendChild(style);
 
-// Smooth scroll for navigation
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
 
-console.log('HabitOS Website loaded successfully!');
-console.log('Payment integration: Razorpay + Gumroad');
-console.log('Download ready for: Windows, macOS, Linux');
+
